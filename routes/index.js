@@ -28,11 +28,11 @@ router.get("/employees", async (req, res) => {
 router.get("/projects", async (req, res) => {
   try {
     const projects = await models.Project.findAll({
-      include: [
-        {
-          model: models.Period,
-        },
-      ],
+      // include: [
+      //   {
+      //     model: models.Period,
+      //   },
+      // ],
     });
     res.send(projects);
     console.log(res)
