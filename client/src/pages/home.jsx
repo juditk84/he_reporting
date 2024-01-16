@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Tab, Tabs } from 'react-bootstrap'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function home() {
 
   const [key, setKey] = useState();
   const navigate = useNavigate();
 
+  
+
+    
   return (
     <div>
       <Tabs

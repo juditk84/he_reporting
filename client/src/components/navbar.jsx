@@ -4,8 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+// import { useState, useEffect } from 'react';
+function NavBar({projects, setActiveProject}) {
 
-function NavBar() {
+  function handleProjectClick(project){
+    setActiveProject(project)
+  }
+
+
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
@@ -16,11 +22,7 @@ function NavBar() {
             <Nav.Link href="#features">Dashboard</Nav.Link>
             <Nav.Link href="#pricing">Settings</Nav.Link>
             <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              {projects.map((project => <NavDropdown.Item onClick={() => handleProjectClick(project)} key={project.id} href="">{project.internal_code}</NavDropdown.Item>))}
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
