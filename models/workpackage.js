@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       WorkPackage.belongsTo(models.Project, { foreignKey: "ProjectId" });
-      // WorkPackage.belongsToMany(models.Expense, { foreignKey: "ExpenseId" });
+      WorkPackage.belongsToMany(models.Expense, { through: "WorkpackageExpenses" });
     }
   }
   WorkPackage.init({

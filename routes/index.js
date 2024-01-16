@@ -25,4 +25,27 @@ router.get("/employees", async (req, res) => {
   }
 });
 
+router.get("/expenses", async (req, res) => {
+  try {
+    const actions = await models.Expense.findAll({
+      include: [
+        {
+          model: models.Supplier,
+          attributes: ["id", "VAT_number"]
+        },
+        {
+          model: models.WorkPackage,
+          attributes: ["number", "name"],
+          include: {model: models.Project, attributes: ["id", "CE_code"]}
+        },
+
+      ],
+    });
+    res.send(actions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
