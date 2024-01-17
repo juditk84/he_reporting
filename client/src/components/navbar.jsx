@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // import { useState, useEffect } from 'react';
-function NavBar({projects, setActiveProject}) {
+function NavBar({projects, setActiveProject, activeProject}) {
 
   function handleProjectClick(project){
     setActiveProject(project)
@@ -28,7 +28,9 @@ function NavBar({projects, setActiveProject}) {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link >Project:{activeProject ? activeProject.CE_code : "select a project from the dropdown"}</Nav.Link>
           </Nav>
+          
           <Form className="d-flex">
                   <Form.Control
                     type="search"

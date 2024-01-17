@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div>
-      <NavBar projects={projects} setActiveProject={setActiveProject} />
+      <NavBar projects={projects} activeProject={activeProject} setActiveProject={setActiveProject} />
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="/landing" element={<Landing />} />

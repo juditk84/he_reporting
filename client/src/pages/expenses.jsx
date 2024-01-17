@@ -4,7 +4,7 @@ import Grid from '../components/grid';
 
 export default function expenses({activeProject}) {
 
-  const [activePeriod, setActivePeriod] = useState();
+  const [activePeriod, setActivePeriod] = useState([{number: 1}]);
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function expenses({activeProject}) {
 
   return (
     <div>
-
+      
     <label htmlFor="periods">Select a period:</label>
       <select onChange={handlePeriodSelect} name="periods" id="periods">
 
@@ -43,7 +43,6 @@ export default function expenses({activeProject}) {
       </select>
 
       <Grid expenses={expenses}/>
-
 
     </div>
   )
