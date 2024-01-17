@@ -1,69 +1,32 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import {AgGridReact} from 'ag-grid-react'
-
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 
 
 export default function expenses({activeProject}) {
 
-  const [periodsWithExpenses, setPeriodsWithExpenses] = useState([]);
+  const [activePeriod, setActivePeriod] = useState();
+  const [expenses, setExpenses] = useState([]);
 
-  useEffect(() => {
-    getProjectPeriodsAndExpenses()
-  }, [activeProject])
-
-  async function getProjectPeriodsAndExpenses() {
+  async function getPeriodExpenses(period_id) {
     try {
-      const response = await fetch(`api/${activeProject.id}/periods`);
+      const response = await fetch(`api/${period_id}/expenses`);
       if (!response.ok) {
         throw new Error("Oops, something went wrong");
       }
 
       const data = await response.json();
-      setPeriodsWithExpenses(data);
+      setExpenses(data);
     
     } catch (error) {
       console.log(error);
     }
   }
 
-  function handlePeriodSelect(e){
-    console.log("period changed to", e.target.value)
-    setRowData(periodsWithExpenses[1].Expenses)
-    
-  }
+  function handlePeriodSelect(event){
 
-  const GridForExpenses = () => {
-    // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState([]);
-  
-  useEffect(() => {
-    periodsWithExpenses.length && setRowData(periodsWithExpenses[0].Expenses)
-  }, [])
+    console.log("period changed to", event.target.value)
+    setActivePeriod(activeProject.Periods.filter( period => period.number === event.target.value))
 
-  // Column Definitions: Defines & controls grid columns.
-  const [colDefs, setColDefs] = useState([
-
-    { field: "id"},
-    { field: "type"},
-    { field: "inv_reference" },
-    { field: "internal_reference" },
-    { field: "inv_date" },
-    { field: "payment_date" },
-    { field: "amount" },
-    { field: "createdAt" },
-    { field: "updatedAt" },
-    { field: "SupplierId" },
-    { field: "PeriodId" },
-
-    ]);
-      
-    return (<div className="ag-theme-quartz" style={{ height: 500 }}>
-    {/* The AG Grid component */}
-    <AgGridReact rowData={rowData} columnDefs={colDefs} />
-  </div>)
   }
 
   return (
@@ -71,10 +34,11 @@ export default function expenses({activeProject}) {
 
     <label htmlFor="periods">Select a period:</label>
       <select onChange={handlePeriodSelect} name="periods" id="periods">
-        {periodsWithExpenses.map(period => <option value={period.number}>{period.number}</option>)}
+
+        {activeProject.Periods.map(period => <option value={period.number}>{period.number}</option>)}
       </select>
 
-      <GridForExpenses />
+      {/* <GridForExpenses /> */}
 
     </div>
   )

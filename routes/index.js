@@ -28,11 +28,11 @@ router.get("/employees", async (req, res) => {
 router.get("/projects", async (req, res) => {
   try {
     const projects = await models.Project.findAll({
-      // include: [
-      //   {
-      //     model: models.Period,
-      //   },
-      // ],
+      include: [
+        {
+          model: models.Period,
+        },
+      ],
     });
     res.send(projects);
     console.log(res)
@@ -67,26 +67,19 @@ router.get("/:project_id/periods", async (req, res) => {
   }
 });
 
-router.get("/:project_id/:period_id/expenses", async (req, res) => {
+router.get("/:period_id/expenses", async (req, res) => {
 
-  const project_id = req.params.project_id;
   const period_id = req.params.period_id;
 
   try {
-    const periods = await models.Period.findAll({
+    const expenses = await models.Expense.findAll({
     
       where: {
-        ProjectId: project_id,
-        PeriodId: period_id
+        PeriodId: period_id,
       },
-      include: [
-        {
-          model: models.Expense,
-        },
-      ],
 
     });
-    res.send(periods);
+    res.send(expenses);
     console.log(res)
   } catch (error) {
     console.error(error);
