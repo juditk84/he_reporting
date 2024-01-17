@@ -11,9 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Period.belongsTo(models.Project)
+      Period.hasMany(models.Expense);
     }
   }
   Period.init({
+    number: DataTypes.INTEGER,
     start_date: DataTypes.DATE,
     end_date: DataTypes.DATE,
     is_final: DataTypes.BOOLEAN

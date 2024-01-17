@@ -42,6 +42,58 @@ router.get("/projects", async (req, res) => {
   }
 });
 
+router.get("/:project_id/periods", async (req, res) => {
+
+  const project_id = req.params.project_id
+
+  try {
+    const periods = await models.Period.findAll({
+    
+      where: {
+        ProjectId: project_id,
+      },
+      include: [
+        {
+          model: models.Expense,
+        },
+      ],
+
+    });
+    res.send(periods);
+    console.log(res)
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+});
+
+router.get("/:project_id/:period_id/expenses", async (req, res) => {
+
+  const project_id = req.params.project_id;
+  const period_id = req.params.period_id;
+
+  try {
+    const periods = await models.Period.findAll({
+    
+      where: {
+        ProjectId: project_id,
+        PeriodId: period_id
+      },
+      include: [
+        {
+          model: models.Expense,
+        },
+      ],
+
+    });
+    res.send(periods);
+    console.log(res)
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+});
+
 router.get("/expenses", async (req, res) => {
   try {
     const actions = await models.Expense.findAll({
