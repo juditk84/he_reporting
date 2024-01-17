@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {AgGridReact} from 'ag-grid-react'
 
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 
-export default function grid() {
+export default function grid({expenses}) {
+
+    useEffect(() => {
+        setRowData(expenses)
+    }, [expenses])
 
         // Row Data: The data to be displayed.
       const [rowData, setRowData] = useState([]);

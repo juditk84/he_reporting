@@ -1,11 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-
+import Grid from '../components/grid';
 
 export default function expenses({activeProject}) {
 
   const [activePeriod, setActivePeriod] = useState();
   const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    activePeriod && getPeriodExpenses(activePeriod[0].number)
+  }, [activePeriod])
 
   async function getPeriodExpenses(period_id) {
     try {
@@ -16,6 +20,7 @@ export default function expenses({activeProject}) {
 
       const data = await response.json();
       setExpenses(data);
+      console.log("the expenses selected:",data)
     
     } catch (error) {
       console.log(error);
@@ -24,8 +29,7 @@ export default function expenses({activeProject}) {
 
   function handlePeriodSelect(event){
 
-    console.log("period changed to", event.target.value)
-    setActivePeriod(activeProject.Periods.filter( period => period.number === event.target.value))
+    setActivePeriod(activeProject.Periods.filter( period => period.number === +(event.target.value)))
 
   }
 
@@ -35,10 +39,11 @@ export default function expenses({activeProject}) {
     <label htmlFor="periods">Select a period:</label>
       <select onChange={handlePeriodSelect} name="periods" id="periods">
 
-        {activeProject.Periods.map(period => <option value={period.number}>{period.number}</option>)}
+        {activeProject.Periods.map(period => <option key={period.id} value={period.number}>{period.number}</option>)}
       </select>
 
-      {/* <GridForExpenses /> */}
+      <Grid expenses={expenses}/>
+
 
     </div>
   )
